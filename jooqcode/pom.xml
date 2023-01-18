@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>onlinetest</artifactId>
+        <groupId>top.jayczee</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jooqcode</artifactId>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <!--下面这段不注释时，可以通过 mvn clean install 来生成代码-->
+                <executions>
+                    <execution>
+                        <id>convergence</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.29</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <jdbc>
+                        <!-- 数据库相关配置 -->
+                        <driver>com.mysql.cj.jdbc.Driver</driver>
+                        <url>jdbc:mysql://124.222.114.100:3306/graduation</url>
+                        <user>root</user>
+                        <password>jhkd5960795.</password>
+                    </jdbc>
+
+                    <generator>
+                        <name>org.jooq.codegen.JavaGenerator</name>
+                        <database>
+                            <!-- 数据库的基本信息 -->
+                            <name>org.jooq.meta.mysql.MySQLDatabase</name>
+                            <inputSchema>graduation</inputSchema>
+                            <!-- 所有的表都包含进来，用于自动生成代码 -->
+                            <includes>.*</includes>
+                            <forcedTypes>
+                                <forcedType>
+                                    <name>BOOLEAN</name>
+                                    <includeTypes>(?i:TINYINT\(1\))</includeTypes>
+                                </forcedType>
+                            </forcedTypes>
+                        </database>
+
+                        <generate>
+                            <pojos>true</pojos>
+                            <daos>true</daos>
+                            <interfaces>true</interfaces>
+                            <springAnnotations>true</springAnnotations>
+                        </generate>
+                        <target>
+                            <!-- 自动生成的类的包名，以及路径 -->
+                            <packageName>top.jayczee.codegen</packageName>
+                            <directory>src/main/java</directory>
+                        </target>
+
+                        <strategy>
+                            <matchers>
+                                <fields>
+                                    <field>
+                                        <expression>^(.*)$</expression>
+                                        <fieldIdentifier>
+                                            <transform>PASCAL</transform>
+                                        </fieldIdentifier>
+                                    </field>
+                                </fields>
+                                <tables>
+                                    <table>
+                                        <expression>^(.*)$</expression>
+                                        <tableClass>
+                                            <!-- table的后缀为TB -->
+                                            <transform>PASCAL</transform>
+                                            <expression>$1_Table</expression>
+                                        </tableClass>
+                                    </table>
+                                </tables>
+                            </matchers>
+                        </strategy>
+                    </generator>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

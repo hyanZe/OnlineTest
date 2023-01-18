@@ -1,0 +1,3 @@
+#
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  top.jayczee.spring.boot.config.AutoConfig
