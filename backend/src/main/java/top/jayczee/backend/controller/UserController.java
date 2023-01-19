@@ -24,12 +24,9 @@ import javax.validation.Valid;
 public class UserController {
     @Setter(onMethod_ = {@Autowired})
     private UserService userService;
-
+    @ApiOperation("登录接口")
     @PostMapping("/user/login.json")
-    public R<Boolean> login(@RequestBody LoginInfo loginInfo){
-        if (EmptySugar.isEmptyValue(loginInfo.getUsername()) || EmptySugar.isEmptyValue(loginInfo.getPassword())){
-            return R.ng("用户名或密码不能为空");
-        }
+    public R<Boolean> login(@RequestBody @Valid LoginInfo loginInfo){
         Long userId= userService.checkLogin(loginInfo);
         if (userId == -1L){
             return R.ng("用户名或密码错误");
@@ -39,5 +36,13 @@ public class UserController {
             session.set("id",userId);
             return R.ok("登录成功");
         }
+    }
+    @ApiOperation("注册接口")
+    @PostMapping("/user/register.json")
+    public R<?> register(@RequestBody @Valid LoginInfo loginInfo){
+        Long userId=userService.register(loginInfo);
+        if (userId > 0)
+            return R.ok();
+        return R.ng();
     }
 }

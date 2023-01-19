@@ -82,4 +82,9 @@ public class GlobalException {
         log.info(e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(R.ng("需要登录"));
     }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public R<?> illegalException(IllegalArgumentException e){
+        String message= e.getMessage();
+        return R.ng(message);
+    }
 }
