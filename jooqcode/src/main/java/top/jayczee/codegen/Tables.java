@@ -4,6 +4,9 @@
 package top.jayczee.codegen;
 
 
+import top.jayczee.codegen.tables.DeviceDataTable;
+import top.jayczee.codegen.tables.DeviceInfoTable;
+import top.jayczee.codegen.tables.SensorInfoTable;
 import top.jayczee.codegen.tables.UserInfoTable;
 
 
@@ -12,6 +15,21 @@ import top.jayczee.codegen.tables.UserInfoTable;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * 数据记录
+     */
+    public static final DeviceDataTable DEVICE_DATA = DeviceDataTable.DEVICE_DATA;
+
+    /**
+     * 设备信息
+     */
+    public static final DeviceInfoTable DEVICE_INFO = DeviceInfoTable.DEVICE_INFO;
+
+    /**
+     * 传感器信息
+     */
+    public static final SensorInfoTable SENSOR_INFO = SensorInfoTable.SENSOR_INFO;
 
     /**
      * 用户信息

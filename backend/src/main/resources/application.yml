@@ -54,11 +54,11 @@ sa-token:
   #输出日志
   is-log: true
   #是否从请求体里读token
-  is-read-body: false
+  is-read-body: true
   #是否在cookie里读取token false时不读取 而且用户登录时也不会往客户端的cookie里写token
-  is-read-cookie: false
+  is-read-cookie: true
   #是否从header里读token 这种方式在cookie被禁用的情况下也能很好使用
-  is-read-head: true
+  is-read-head: false
   #是否在程序启动时打印字符画 就跟Springboot启动的时候画一个大Springboot一样
   is-print: false
 
