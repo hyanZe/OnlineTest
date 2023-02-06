@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.jayczee.backend.pojo.R;
 import top.jayczee.backend.service.DashboardService;
 
-@RestController
+@RestController //将返回值序列化为json格式 // { "id":1,"ip":"2","deviceName":"3"}
 public class DashboardController {
     @Setter(onMethod_ = @Autowired)
     private DashboardService dashboardService;
@@ -24,6 +24,7 @@ public class DashboardController {
     public R<Object> totalSensorCount(){
         return R.okData(dashboardService.totalSensorCount());
     }
+
     @ApiOperation("平均元素浓度")
     @PostMapping("/auth/dashboard/average-data.json")
     public R<Object> averageData(){
