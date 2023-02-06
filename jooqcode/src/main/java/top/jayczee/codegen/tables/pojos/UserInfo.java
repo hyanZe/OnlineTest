@@ -21,6 +21,7 @@ public class UserInfo implements IUserInfo {
     private LocalDateTime createDt;
     private String        loginName;
     private String        password;
+    private String        salt;
 
     public UserInfo() {}
 
@@ -29,18 +30,21 @@ public class UserInfo implements IUserInfo {
         this.createDt = value.getCreateDt();
         this.loginName = value.getLoginName();
         this.password = value.getPassword();
+        this.salt = value.getSalt();
     }
 
     public UserInfo(
         Long          id,
         LocalDateTime createDt,
         String        loginName,
-        String        password
+        String        password,
+        String        salt
     ) {
         this.id = id;
         this.createDt = createDt;
         this.loginName = loginName;
         this.password = password;
+        this.salt = salt;
     }
 
     /**
@@ -107,6 +111,22 @@ public class UserInfo implements IUserInfo {
         this.password = password;
     }
 
+    /**
+     * Getter for <code>graduation.user_info.salt</code>. 盐
+     */
+    @Override
+    public String getSalt() {
+        return this.salt;
+    }
+
+    /**
+     * Setter for <code>graduation.user_info.salt</code>. 盐
+     */
+    @Override
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("UserInfo (");
@@ -115,6 +135,7 @@ public class UserInfo implements IUserInfo {
         sb.append(", ").append(createDt);
         sb.append(", ").append(loginName);
         sb.append(", ").append(password);
+        sb.append(", ").append(salt);
 
         sb.append(")");
         return sb.toString();
@@ -130,6 +151,7 @@ public class UserInfo implements IUserInfo {
         setCreateDt(from.getCreateDt());
         setLoginName(from.getLoginName());
         setPassword(from.getPassword());
+        setSalt(from.getSalt());
     }
 
     @Override

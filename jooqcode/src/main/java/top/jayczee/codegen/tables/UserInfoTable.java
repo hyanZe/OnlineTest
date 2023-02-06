@@ -12,7 +12,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row4;
+import org.jooq.Row5;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -67,6 +67,11 @@ public class UserInfoTable extends TableImpl<UserInfoRecord> {
      * The column <code>graduation.user_info.password</code>. 密码
      */
     public final TableField<UserInfoRecord, String> Password = createField(DSL.name("password"), SQLDataType.VARCHAR(200).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "密码");
+
+    /**
+     * The column <code>graduation.user_info.salt</code>. 盐
+     */
+    public final TableField<UserInfoRecord, String> Salt = createField(DSL.name("salt"), SQLDataType.VARCHAR(200).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "盐");
 
     private UserInfoTable(Name alias, Table<UserInfoRecord> aliased) {
         this(alias, aliased, null);
@@ -143,11 +148,11 @@ public class UserInfoTable extends TableImpl<UserInfoRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row4 type methods
+    // Row5 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Long, LocalDateTime, String, String> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<Long, LocalDateTime, String, String, String> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 }

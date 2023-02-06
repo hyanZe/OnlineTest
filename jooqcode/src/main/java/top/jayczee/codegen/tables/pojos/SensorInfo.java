@@ -21,7 +21,9 @@ public class SensorInfo implements ISensorInfo {
     private LocalDateTime createDt;
     private String        sensorName;
     private Long          deviceId;
+    private String        dataType;
     private Boolean       isRunning;
+    private Boolean       isDelete;
 
     public SensorInfo() {}
 
@@ -30,7 +32,9 @@ public class SensorInfo implements ISensorInfo {
         this.createDt = value.getCreateDt();
         this.sensorName = value.getSensorName();
         this.deviceId = value.getDeviceId();
+        this.dataType = value.getDataType();
         this.isRunning = value.getIsRunning();
+        this.isDelete = value.getIsDelete();
     }
 
     public SensorInfo(
@@ -38,13 +42,17 @@ public class SensorInfo implements ISensorInfo {
         LocalDateTime createDt,
         String        sensorName,
         Long          deviceId,
-        Boolean       isRunning
+        String        dataType,
+        Boolean       isRunning,
+        Boolean       isDelete
     ) {
         this.id = id;
         this.createDt = createDt;
         this.sensorName = sensorName;
         this.deviceId = deviceId;
+        this.dataType = dataType;
         this.isRunning = isRunning;
+        this.isDelete = isDelete;
     }
 
     /**
@@ -112,6 +120,22 @@ public class SensorInfo implements ISensorInfo {
     }
 
     /**
+     * Getter for <code>graduation.sensor_info.data_type</code>. 传感器类型
+     */
+    @Override
+    public String getDataType() {
+        return this.dataType;
+    }
+
+    /**
+     * Setter for <code>graduation.sensor_info.data_type</code>. 传感器类型
+     */
+    @Override
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
+    }
+
+    /**
      * Getter for <code>graduation.sensor_info.is_running</code>. 是否打开
      */
     @Override
@@ -127,6 +151,22 @@ public class SensorInfo implements ISensorInfo {
         this.isRunning = isRunning;
     }
 
+    /**
+     * Getter for <code>graduation.sensor_info.is_delete</code>. 是否已删除
+     */
+    @Override
+    public Boolean getIsDelete() {
+        return this.isDelete;
+    }
+
+    /**
+     * Setter for <code>graduation.sensor_info.is_delete</code>. 是否已删除
+     */
+    @Override
+    public void setIsDelete(Boolean isDelete) {
+        this.isDelete = isDelete;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("SensorInfo (");
@@ -135,7 +175,9 @@ public class SensorInfo implements ISensorInfo {
         sb.append(", ").append(createDt);
         sb.append(", ").append(sensorName);
         sb.append(", ").append(deviceId);
+        sb.append(", ").append(dataType);
         sb.append(", ").append(isRunning);
+        sb.append(", ").append(isDelete);
 
         sb.append(")");
         return sb.toString();
@@ -151,7 +193,9 @@ public class SensorInfo implements ISensorInfo {
         setCreateDt(from.getCreateDt());
         setSensorName(from.getSensorName());
         setDeviceId(from.getDeviceId());
+        setDataType(from.getDataType());
         setIsRunning(from.getIsRunning());
+        setIsDelete(from.getIsDelete());
     }
 
     @Override

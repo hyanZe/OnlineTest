@@ -55,6 +55,16 @@ public interface ISensorInfo extends Serializable {
     public Long getDeviceId();
 
     /**
+     * Setter for <code>graduation.sensor_info.data_type</code>. 传感器类型
+     */
+    public void setDataType(String value);
+
+    /**
+     * Getter for <code>graduation.sensor_info.data_type</code>. 传感器类型
+     */
+    public String getDataType();
+
+    /**
      * Setter for <code>graduation.sensor_info.is_running</code>. 是否打开
      */
     public void setIsRunning(Boolean value);
@@ -63,6 +73,16 @@ public interface ISensorInfo extends Serializable {
      * Getter for <code>graduation.sensor_info.is_running</code>. 是否打开
      */
     public Boolean getIsRunning();
+
+    /**
+     * Setter for <code>graduation.sensor_info.is_delete</code>. 是否已删除
+     */
+    public void setIsDelete(Boolean value);
+
+    /**
+     * Getter for <code>graduation.sensor_info.is_delete</code>. 是否已删除
+     */
+    public Boolean getIsDelete();
 
     // -------------------------------------------------------------------------
     // FROM and INTO

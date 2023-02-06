@@ -55,6 +55,16 @@ public interface IDeviceData extends Serializable {
     public Long getDeviceId();
 
     /**
+     * Setter for <code>graduation.device_data.sensor_id</code>. 传感器ID
+     */
+    public void setSensorId(Long value);
+
+    /**
+     * Getter for <code>graduation.device_data.sensor_id</code>. 传感器ID
+     */
+    public Long getSensorId();
+
+    /**
      * Setter for <code>graduation.device_data.data</code>. 数据值
      */
     public void setData(String value);

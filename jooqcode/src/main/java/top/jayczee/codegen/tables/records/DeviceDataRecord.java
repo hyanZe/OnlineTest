@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record7;
-import org.jooq.Row7;
+import org.jooq.Record8;
+import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
 
 import top.jayczee.codegen.tables.DeviceDataTable;
@@ -20,7 +20,7 @@ import top.jayczee.codegen.tables.interfaces.IDeviceData;
  * 数据记录
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> implements Record7<Long, LocalDateTime, String, Long, String, String, Boolean>, IDeviceData {
+public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> implements Record8<Long, LocalDateTime, String, Long, Long, String, String, Boolean>, IDeviceData {
 
     private static final long serialVersionUID = 1L;
 
@@ -89,11 +89,27 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
     }
 
     /**
+     * Setter for <code>graduation.device_data.sensor_id</code>. 传感器ID
+     */
+    @Override
+    public void setSensorId(Long value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>graduation.device_data.sensor_id</code>. 传感器ID
+     */
+    @Override
+    public Long getSensorId() {
+        return (Long) get(4);
+    }
+
+    /**
      * Setter for <code>graduation.device_data.data</code>. 数据值
      */
     @Override
     public void setData(String value) {
-        set(4, value);
+        set(5, value);
     }
 
     /**
@@ -101,7 +117,7 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
      */
     @Override
     public String getData() {
-        return (String) get(4);
+        return (String) get(5);
     }
 
     /**
@@ -109,7 +125,7 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
      */
     @Override
     public void setDataType(String value) {
-        set(5, value);
+        set(6, value);
     }
 
     /**
@@ -117,7 +133,7 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
      */
     @Override
     public String getDataType() {
-        return (String) get(5);
+        return (String) get(6);
     }
 
     /**
@@ -125,7 +141,7 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
      */
     @Override
     public void setIsError(Boolean value) {
-        set(6, value);
+        set(7, value);
     }
 
     /**
@@ -133,7 +149,7 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
      */
     @Override
     public Boolean getIsError() {
-        return (Boolean) get(6);
+        return (Boolean) get(7);
     }
 
     // -------------------------------------------------------------------------
@@ -146,17 +162,17 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
     }
 
     // -------------------------------------------------------------------------
-    // Record7 type implementation
+    // Record8 type implementation
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Long, LocalDateTime, String, Long, String, String, Boolean> fieldsRow() {
-        return (Row7) super.fieldsRow();
+    public Row8<Long, LocalDateTime, String, Long, Long, String, String, Boolean> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 
     @Override
-    public Row7<Long, LocalDateTime, String, Long, String, String, Boolean> valuesRow() {
-        return (Row7) super.valuesRow();
+    public Row8<Long, LocalDateTime, String, Long, Long, String, String, Boolean> valuesRow() {
+        return (Row8) super.valuesRow();
     }
 
     @Override
@@ -180,17 +196,22 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
     }
 
     @Override
-    public Field<String> field5() {
-        return DeviceDataTable.DEVICE_DATA.Data;
+    public Field<Long> field5() {
+        return DeviceDataTable.DEVICE_DATA.SensorId;
     }
 
     @Override
     public Field<String> field6() {
+        return DeviceDataTable.DEVICE_DATA.Data;
+    }
+
+    @Override
+    public Field<String> field7() {
         return DeviceDataTable.DEVICE_DATA.DataType;
     }
 
     @Override
-    public Field<Boolean> field7() {
+    public Field<Boolean> field8() {
         return DeviceDataTable.DEVICE_DATA.IsError;
     }
 
@@ -215,17 +236,22 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
     }
 
     @Override
-    public String component5() {
-        return getData();
+    public Long component5() {
+        return getSensorId();
     }
 
     @Override
     public String component6() {
+        return getData();
+    }
+
+    @Override
+    public String component7() {
         return getDataType();
     }
 
     @Override
-    public Boolean component7() {
+    public Boolean component8() {
         return getIsError();
     }
 
@@ -250,17 +276,22 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
     }
 
     @Override
-    public String value5() {
-        return getData();
+    public Long value5() {
+        return getSensorId();
     }
 
     @Override
     public String value6() {
+        return getData();
+    }
+
+    @Override
+    public String value7() {
         return getDataType();
     }
 
     @Override
-    public Boolean value7() {
+    public Boolean value8() {
         return getIsError();
     }
 
@@ -289,25 +320,31 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
     }
 
     @Override
-    public DeviceDataRecord value5(String value) {
-        setData(value);
+    public DeviceDataRecord value5(Long value) {
+        setSensorId(value);
         return this;
     }
 
     @Override
     public DeviceDataRecord value6(String value) {
+        setData(value);
+        return this;
+    }
+
+    @Override
+    public DeviceDataRecord value7(String value) {
         setDataType(value);
         return this;
     }
 
     @Override
-    public DeviceDataRecord value7(Boolean value) {
+    public DeviceDataRecord value8(Boolean value) {
         setIsError(value);
         return this;
     }
 
     @Override
-    public DeviceDataRecord values(Long value1, LocalDateTime value2, String value3, Long value4, String value5, String value6, Boolean value7) {
+    public DeviceDataRecord values(Long value1, LocalDateTime value2, String value3, Long value4, Long value5, String value6, String value7, Boolean value8) {
         value1(value1);
         value2(value2);
         value3(value3);
@@ -315,6 +352,7 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
         value5(value5);
         value6(value6);
         value7(value7);
+        value8(value8);
         return this;
     }
 
@@ -328,6 +366,7 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
         setCreateDt(from.getCreateDt());
         setIp(from.getIp());
         setDeviceId(from.getDeviceId());
+        setSensorId(from.getSensorId());
         setData(from.getData());
         setDataType(from.getDataType());
         setIsError(from.getIsError());
@@ -353,13 +392,14 @@ public class DeviceDataRecord extends UpdatableRecordImpl<DeviceDataRecord> impl
     /**
      * Create a detached, initialised DeviceDataRecord
      */
-    public DeviceDataRecord(Long id, LocalDateTime createDt, String ip, Long deviceId, String data, String dataType, Boolean isError) {
+    public DeviceDataRecord(Long id, LocalDateTime createDt, String ip, Long deviceId, Long sensorId, String data, String dataType, Boolean isError) {
         super(DeviceDataTable.DEVICE_DATA);
 
         setId(id);
         setCreateDt(createDt);
         setIp(ip);
         setDeviceId(deviceId);
+        setSensorId(sensorId);
         setData(data);
         setDataType(dataType);
         setIsError(isError);

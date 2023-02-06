@@ -54,6 +54,16 @@ public interface IUserInfo extends Serializable {
      */
     public String getPassword();
 
+    /**
+     * Setter for <code>graduation.user_info.salt</code>. 盐
+     */
+    public void setSalt(String value);
+
+    /**
+     * Getter for <code>graduation.user_info.salt</code>. 盐
+     */
+    public String getSalt();
+
     // -------------------------------------------------------------------------
     // FROM and INTO
     // -------------------------------------------------------------------------

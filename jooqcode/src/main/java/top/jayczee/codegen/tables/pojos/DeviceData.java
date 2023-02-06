@@ -21,6 +21,7 @@ public class DeviceData implements IDeviceData {
     private LocalDateTime createDt;
     private String        ip;
     private Long          deviceId;
+    private Long          sensorId;
     private String        data;
     private String        dataType;
     private Boolean       isError;
@@ -32,6 +33,7 @@ public class DeviceData implements IDeviceData {
         this.createDt = value.getCreateDt();
         this.ip = value.getIp();
         this.deviceId = value.getDeviceId();
+        this.sensorId = value.getSensorId();
         this.data = value.getData();
         this.dataType = value.getDataType();
         this.isError = value.getIsError();
@@ -42,6 +44,7 @@ public class DeviceData implements IDeviceData {
         LocalDateTime createDt,
         String        ip,
         Long          deviceId,
+        Long          sensorId,
         String        data,
         String        dataType,
         Boolean       isError
@@ -50,6 +53,7 @@ public class DeviceData implements IDeviceData {
         this.createDt = createDt;
         this.ip = ip;
         this.deviceId = deviceId;
+        this.sensorId = sensorId;
         this.data = data;
         this.dataType = dataType;
         this.isError = isError;
@@ -120,6 +124,22 @@ public class DeviceData implements IDeviceData {
     }
 
     /**
+     * Getter for <code>graduation.device_data.sensor_id</code>. 传感器ID
+     */
+    @Override
+    public Long getSensorId() {
+        return this.sensorId;
+    }
+
+    /**
+     * Setter for <code>graduation.device_data.sensor_id</code>. 传感器ID
+     */
+    @Override
+    public void setSensorId(Long sensorId) {
+        this.sensorId = sensorId;
+    }
+
+    /**
      * Getter for <code>graduation.device_data.data</code>. 数据值
      */
     @Override
@@ -175,6 +195,7 @@ public class DeviceData implements IDeviceData {
         sb.append(", ").append(createDt);
         sb.append(", ").append(ip);
         sb.append(", ").append(deviceId);
+        sb.append(", ").append(sensorId);
         sb.append(", ").append(data);
         sb.append(", ").append(dataType);
         sb.append(", ").append(isError);
@@ -193,6 +214,7 @@ public class DeviceData implements IDeviceData {
         setCreateDt(from.getCreateDt());
         setIp(from.getIp());
         setDeviceId(from.getDeviceId());
+        setSensorId(from.getSensorId());
         setData(from.getData());
         setDataType(from.getDataType());
         setIsError(from.getIsError());

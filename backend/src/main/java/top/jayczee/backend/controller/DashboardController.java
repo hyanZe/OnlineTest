@@ -18,4 +18,15 @@ public class DashboardController {
     public R<Object> totalSensorDataCount(){
         return R.okData(dashboardService.sensorDataCount());
     }
+
+    @ApiOperation("传感器个数数据")
+    @PostMapping("/auth/dashboard/sensor-count.json")
+    public R<Object> totalSensorCount(){
+        return R.okData(dashboardService.totalSensorCount());
+    }
+    @ApiOperation("平均元素浓度")
+    @PostMapping("/auth/dashboard/average-data.json")
+    public R<Object> averageData(){
+        return null;
+    }
 }

@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record5;
-import org.jooq.Row5;
+import org.jooq.Record7;
+import org.jooq.Row7;
 import org.jooq.impl.UpdatableRecordImpl;
 
 import top.jayczee.codegen.tables.SensorInfoTable;
@@ -20,7 +20,7 @@ import top.jayczee.codegen.tables.interfaces.ISensorInfo;
  * 传感器信息
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> implements Record5<Long, LocalDateTime, String, Long, Boolean>, ISensorInfo {
+public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> implements Record7<Long, LocalDateTime, String, Long, String, Boolean, Boolean>, ISensorInfo {
 
     private static final long serialVersionUID = 1L;
 
@@ -89,11 +89,27 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
     }
 
     /**
+     * Setter for <code>graduation.sensor_info.data_type</code>. 传感器类型
+     */
+    @Override
+    public void setDataType(String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>graduation.sensor_info.data_type</code>. 传感器类型
+     */
+    @Override
+    public String getDataType() {
+        return (String) get(4);
+    }
+
+    /**
      * Setter for <code>graduation.sensor_info.is_running</code>. 是否打开
      */
     @Override
     public void setIsRunning(Boolean value) {
-        set(4, value);
+        set(5, value);
     }
 
     /**
@@ -101,7 +117,23 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
      */
     @Override
     public Boolean getIsRunning() {
-        return (Boolean) get(4);
+        return (Boolean) get(5);
+    }
+
+    /**
+     * Setter for <code>graduation.sensor_info.is_delete</code>. 是否已删除
+     */
+    @Override
+    public void setIsDelete(Boolean value) {
+        set(6, value);
+    }
+
+    /**
+     * Getter for <code>graduation.sensor_info.is_delete</code>. 是否已删除
+     */
+    @Override
+    public Boolean getIsDelete() {
+        return (Boolean) get(6);
     }
 
     // -------------------------------------------------------------------------
@@ -114,17 +146,17 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
     }
 
     // -------------------------------------------------------------------------
-    // Record5 type implementation
+    // Record7 type implementation
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Long, LocalDateTime, String, Long, Boolean> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row7<Long, LocalDateTime, String, Long, String, Boolean, Boolean> fieldsRow() {
+        return (Row7) super.fieldsRow();
     }
 
     @Override
-    public Row5<Long, LocalDateTime, String, Long, Boolean> valuesRow() {
-        return (Row5) super.valuesRow();
+    public Row7<Long, LocalDateTime, String, Long, String, Boolean, Boolean> valuesRow() {
+        return (Row7) super.valuesRow();
     }
 
     @Override
@@ -148,8 +180,18 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
     }
 
     @Override
-    public Field<Boolean> field5() {
+    public Field<String> field5() {
+        return SensorInfoTable.SENSOR_INFO.DataType;
+    }
+
+    @Override
+    public Field<Boolean> field6() {
         return SensorInfoTable.SENSOR_INFO.IsRunning;
+    }
+
+    @Override
+    public Field<Boolean> field7() {
+        return SensorInfoTable.SENSOR_INFO.IsDelete;
     }
 
     @Override
@@ -173,8 +215,18 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
     }
 
     @Override
-    public Boolean component5() {
+    public String component5() {
+        return getDataType();
+    }
+
+    @Override
+    public Boolean component6() {
         return getIsRunning();
+    }
+
+    @Override
+    public Boolean component7() {
+        return getIsDelete();
     }
 
     @Override
@@ -198,8 +250,18 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
     }
 
     @Override
-    public Boolean value5() {
+    public String value5() {
+        return getDataType();
+    }
+
+    @Override
+    public Boolean value6() {
         return getIsRunning();
+    }
+
+    @Override
+    public Boolean value7() {
+        return getIsDelete();
     }
 
     @Override
@@ -227,18 +289,32 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
     }
 
     @Override
-    public SensorInfoRecord value5(Boolean value) {
+    public SensorInfoRecord value5(String value) {
+        setDataType(value);
+        return this;
+    }
+
+    @Override
+    public SensorInfoRecord value6(Boolean value) {
         setIsRunning(value);
         return this;
     }
 
     @Override
-    public SensorInfoRecord values(Long value1, LocalDateTime value2, String value3, Long value4, Boolean value5) {
+    public SensorInfoRecord value7(Boolean value) {
+        setIsDelete(value);
+        return this;
+    }
+
+    @Override
+    public SensorInfoRecord values(Long value1, LocalDateTime value2, String value3, Long value4, String value5, Boolean value6, Boolean value7) {
         value1(value1);
         value2(value2);
         value3(value3);
         value4(value4);
         value5(value5);
+        value6(value6);
+        value7(value7);
         return this;
     }
 
@@ -252,7 +328,9 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
         setCreateDt(from.getCreateDt());
         setSensorName(from.getSensorName());
         setDeviceId(from.getDeviceId());
+        setDataType(from.getDataType());
         setIsRunning(from.getIsRunning());
+        setIsDelete(from.getIsDelete());
     }
 
     @Override
@@ -275,13 +353,15 @@ public class SensorInfoRecord extends UpdatableRecordImpl<SensorInfoRecord> impl
     /**
      * Create a detached, initialised SensorInfoRecord
      */
-    public SensorInfoRecord(Long id, LocalDateTime createDt, String sensorName, Long deviceId, Boolean isRunning) {
+    public SensorInfoRecord(Long id, LocalDateTime createDt, String sensorName, Long deviceId, String dataType, Boolean isRunning, Boolean isDelete) {
         super(SensorInfoTable.SENSOR_INFO);
 
         setId(id);
         setCreateDt(createDt);
         setSensorName(sensorName);
         setDeviceId(deviceId);
+        setDataType(dataType);
         setIsRunning(isRunning);
+        setIsDelete(isDelete);
     }
 }

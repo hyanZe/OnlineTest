@@ -106,4 +106,18 @@ public class UserInfoDao extends DAOImpl<UserInfoRecord, UserInfo, Long> {
     public List<UserInfo> fetchByPassword(String... values) {
         return fetch(UserInfoTable.USER_INFO.Password, values);
     }
+
+    /**
+     * Fetch records that have <code>salt BETWEEN lowerInclusive AND upperInclusive</code>
+     */
+    public List<UserInfo> fetchRangeOfSalt(String lowerInclusive, String upperInclusive) {
+        return fetchRange(UserInfoTable.USER_INFO.Salt, lowerInclusive, upperInclusive);
+    }
+
+    /**
+     * Fetch records that have <code>salt IN (values)</code>
+     */
+    public List<UserInfo> fetchBySalt(String... values) {
+        return fetch(UserInfoTable.USER_INFO.Salt, values);
+    }
 }

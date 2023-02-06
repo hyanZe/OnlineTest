@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 import org.jooq.Field;
 import org.jooq.Record1;
-import org.jooq.Record4;
-import org.jooq.Row4;
+import org.jooq.Record5;
+import org.jooq.Row5;
 import org.jooq.impl.UpdatableRecordImpl;
 
 import top.jayczee.codegen.tables.UserInfoTable;
@@ -20,7 +20,7 @@ import top.jayczee.codegen.tables.interfaces.IUserInfo;
  * 用户信息
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
-public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implements Record4<Long, LocalDateTime, String, String>, IUserInfo {
+public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implements Record5<Long, LocalDateTime, String, String, String>, IUserInfo {
 
     private static final long serialVersionUID = 1L;
 
@@ -88,6 +88,22 @@ public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implemen
         return (String) get(3);
     }
 
+    /**
+     * Setter for <code>graduation.user_info.salt</code>. 盐
+     */
+    @Override
+    public void setSalt(String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>graduation.user_info.salt</code>. 盐
+     */
+    @Override
+    public String getSalt() {
+        return (String) get(4);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -98,17 +114,17 @@ public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implemen
     }
 
     // -------------------------------------------------------------------------
-    // Record4 type implementation
+    // Record5 type implementation
     // -------------------------------------------------------------------------
 
     @Override
-    public Row4<Long, LocalDateTime, String, String> fieldsRow() {
-        return (Row4) super.fieldsRow();
+    public Row5<Long, LocalDateTime, String, String, String> fieldsRow() {
+        return (Row5) super.fieldsRow();
     }
 
     @Override
-    public Row4<Long, LocalDateTime, String, String> valuesRow() {
-        return (Row4) super.valuesRow();
+    public Row5<Long, LocalDateTime, String, String, String> valuesRow() {
+        return (Row5) super.valuesRow();
     }
 
     @Override
@@ -132,6 +148,11 @@ public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implemen
     }
 
     @Override
+    public Field<String> field5() {
+        return UserInfoTable.USER_INFO.Salt;
+    }
+
+    @Override
     public Long component1() {
         return getId();
     }
@@ -152,6 +173,11 @@ public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implemen
     }
 
     @Override
+    public String component5() {
+        return getSalt();
+    }
+
+    @Override
     public Long value1() {
         return getId();
     }
@@ -169,6 +195,11 @@ public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implemen
     @Override
     public String value4() {
         return getPassword();
+    }
+
+    @Override
+    public String value5() {
+        return getSalt();
     }
 
     @Override
@@ -196,11 +227,18 @@ public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implemen
     }
 
     @Override
-    public UserInfoRecord values(Long value1, LocalDateTime value2, String value3, String value4) {
+    public UserInfoRecord value5(String value) {
+        setSalt(value);
+        return this;
+    }
+
+    @Override
+    public UserInfoRecord values(Long value1, LocalDateTime value2, String value3, String value4, String value5) {
         value1(value1);
         value2(value2);
         value3(value3);
         value4(value4);
+        value5(value5);
         return this;
     }
 
@@ -214,6 +252,7 @@ public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implemen
         setCreateDt(from.getCreateDt());
         setLoginName(from.getLoginName());
         setPassword(from.getPassword());
+        setSalt(from.getSalt());
     }
 
     @Override
@@ -236,12 +275,13 @@ public class UserInfoRecord extends UpdatableRecordImpl<UserInfoRecord> implemen
     /**
      * Create a detached, initialised UserInfoRecord
      */
-    public UserInfoRecord(Long id, LocalDateTime createDt, String loginName, String password) {
+    public UserInfoRecord(Long id, LocalDateTime createDt, String loginName, String password, String salt) {
         super(UserInfoTable.USER_INFO);
 
         setId(id);
         setCreateDt(createDt);
         setLoginName(loginName);
         setPassword(password);
+        setSalt(salt);
     }
 }

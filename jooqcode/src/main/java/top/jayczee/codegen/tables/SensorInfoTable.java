@@ -12,7 +12,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.Row7;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -66,12 +66,22 @@ public class SensorInfoTable extends TableImpl<SensorInfoRecord> {
     /**
      * The column <code>graduation.sensor_info.device_id</code>. 设备ID
      */
-    public final TableField<SensorInfoRecord, Long> DeviceId = createField(DSL.name("device_id"), SQLDataType.BIGINT.nullable(false), this, "设备ID");
+    public final TableField<SensorInfoRecord, Long> DeviceId = createField(DSL.name("device_id"), SQLDataType.BIGINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.BIGINT)), this, "设备ID");
+
+    /**
+     * The column <code>graduation.sensor_info.data_type</code>. 传感器类型
+     */
+    public final TableField<SensorInfoRecord, String> DataType = createField(DSL.name("data_type"), SQLDataType.VARCHAR(200).nullable(false).defaultValue(DSL.inline("", SQLDataType.VARCHAR)), this, "传感器类型");
 
     /**
      * The column <code>graduation.sensor_info.is_running</code>. 是否打开
      */
     public final TableField<SensorInfoRecord, Boolean> IsRunning = createField(DSL.name("is_running"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.inline("0", SQLDataType.BOOLEAN)), this, "是否打开");
+
+    /**
+     * The column <code>graduation.sensor_info.is_delete</code>. 是否已删除
+     */
+    public final TableField<SensorInfoRecord, Boolean> IsDelete = createField(DSL.name("is_delete"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.inline("0", SQLDataType.BOOLEAN)), this, "是否已删除");
 
     private SensorInfoTable(Name alias, Table<SensorInfoRecord> aliased) {
         this(alias, aliased, null);
@@ -148,11 +158,11 @@ public class SensorInfoTable extends TableImpl<SensorInfoRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row7 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Long, LocalDateTime, String, Long, Boolean> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row7<Long, LocalDateTime, String, Long, String, Boolean, Boolean> fieldsRow() {
+        return (Row7) super.fieldsRow();
     }
 }

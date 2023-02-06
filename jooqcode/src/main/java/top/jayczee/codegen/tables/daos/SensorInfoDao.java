@@ -108,6 +108,20 @@ public class SensorInfoDao extends DAOImpl<SensorInfoRecord, SensorInfo, Long> {
     }
 
     /**
+     * Fetch records that have <code>data_type BETWEEN lowerInclusive AND upperInclusive</code>
+     */
+    public List<SensorInfo> fetchRangeOfDataType(String lowerInclusive, String upperInclusive) {
+        return fetchRange(SensorInfoTable.SENSOR_INFO.DataType, lowerInclusive, upperInclusive);
+    }
+
+    /**
+     * Fetch records that have <code>data_type IN (values)</code>
+     */
+    public List<SensorInfo> fetchByDataType(String... values) {
+        return fetch(SensorInfoTable.SENSOR_INFO.DataType, values);
+    }
+
+    /**
      * Fetch records that have <code>is_running BETWEEN lowerInclusive AND upperInclusive</code>
      */
     public List<SensorInfo> fetchRangeOfIsRunning(Boolean lowerInclusive, Boolean upperInclusive) {
@@ -119,5 +133,19 @@ public class SensorInfoDao extends DAOImpl<SensorInfoRecord, SensorInfo, Long> {
      */
     public List<SensorInfo> fetchByIsRunning(Boolean... values) {
         return fetch(SensorInfoTable.SENSOR_INFO.IsRunning, values);
+    }
+
+    /**
+     * Fetch records that have <code>is_delete BETWEEN lowerInclusive AND upperInclusive</code>
+     */
+    public List<SensorInfo> fetchRangeOfIsDelete(Boolean lowerInclusive, Boolean upperInclusive) {
+        return fetchRange(SensorInfoTable.SENSOR_INFO.IsDelete, lowerInclusive, upperInclusive);
+    }
+
+    /**
+     * Fetch records that have <code>is_delete IN (values)</code>
+     */
+    public List<SensorInfo> fetchByIsDelete(Boolean... values) {
+        return fetch(SensorInfoTable.SENSOR_INFO.IsDelete, values);
     }
 }

@@ -12,7 +12,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row7;
+import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -67,6 +67,11 @@ public class DeviceDataTable extends TableImpl<DeviceDataRecord> {
      * The column <code>graduation.device_data.device_id</code>. 设备ID
      */
     public final TableField<DeviceDataRecord, Long> DeviceId = createField(DSL.name("device_id"), SQLDataType.BIGINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.BIGINT)), this, "设备ID");
+
+    /**
+     * The column <code>graduation.device_data.sensor_id</code>. 传感器ID
+     */
+    public final TableField<DeviceDataRecord, Long> SensorId = createField(DSL.name("sensor_id"), SQLDataType.BIGINT.nullable(false).defaultValue(DSL.inline("0", SQLDataType.BIGINT)), this, "传感器ID");
 
     /**
      * The column <code>graduation.device_data.data</code>. 数据值
@@ -158,11 +163,11 @@ public class DeviceDataTable extends TableImpl<DeviceDataRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row7 type methods
+    // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Long, LocalDateTime, String, Long, String, String, Boolean> fieldsRow() {
-        return (Row7) super.fieldsRow();
+    public Row8<Long, LocalDateTime, String, Long, Long, String, String, Boolean> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 }

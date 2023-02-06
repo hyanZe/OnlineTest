@@ -108,6 +108,20 @@ public class DeviceDataDao extends DAOImpl<DeviceDataRecord, DeviceData, Long> {
     }
 
     /**
+     * Fetch records that have <code>sensor_id BETWEEN lowerInclusive AND upperInclusive</code>
+     */
+    public List<DeviceData> fetchRangeOfSensorId(Long lowerInclusive, Long upperInclusive) {
+        return fetchRange(DeviceDataTable.DEVICE_DATA.SensorId, lowerInclusive, upperInclusive);
+    }
+
+    /**
+     * Fetch records that have <code>sensor_id IN (values)</code>
+     */
+    public List<DeviceData> fetchBySensorId(Long... values) {
+        return fetch(DeviceDataTable.DEVICE_DATA.SensorId, values);
+    }
+
+    /**
      * Fetch records that have <code>data BETWEEN lowerInclusive AND upperInclusive</code>
      */
     public List<DeviceData> fetchRangeOfData(String lowerInclusive, String upperInclusive) {
