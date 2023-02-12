@@ -1,15 +1,18 @@
 package top.jayczee.backend.service;
 
+import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
 public interface DeviceService {
     @Setter
+    @Getter
     class DeviceInfo{
-        private Long id;
-        private String ip;
-        private String deviceName;
+            private Long id;
+            private String ip;
+            private String deviceName;
     }
     List<DeviceInfo> deviceList();
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -54,10 +56,17 @@ public interface DashboardService {
         private int baseTempTotal;
     }
     TotalSensorCountInfo totalSensorCount();
-
+    @Getter
+    @Setter
+    class AverageDataSQL{
+        private String dataType;
+        private BigDecimal data;
+    }
     /**
      * 平均元素浓度信息
      */
+    @Getter
+    @Setter
     class AverageDataInfo{
         private BigDecimal ph;
         private BigDecimal p;
@@ -65,6 +74,6 @@ public interface DashboardService {
         private BigDecimal k;
     }
 
-    AverageDataInfo averageData();
+    AverageDataInfo averageData(Long deviceId);
 
 }

@@ -14,6 +14,7 @@ public enum SensorDataType {
     private final String code;
     private final String name;
 
+
     public static final int $id=-1;
     public static final String $code = "";
     public static final String $name= "";

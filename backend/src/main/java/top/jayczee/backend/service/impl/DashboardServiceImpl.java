@@ -12,8 +12,10 @@ import top.jayczee.codegen.tables.SensorInfoTable;
 import top.jayczee.codegen.tables.daos.DeviceDataDao;
 import top.jayczee.codegen.tables.daos.SensorInfoDao;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -140,8 +142,33 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public AverageDataInfo averageData() {
+    public AverageDataInfo averageData(Long deviceId) {
+        DeviceDataTable ddt=Tables.DEVICE_DATA;
+        List<AverageDataSQL> list = deviceDataDao
+                .ctx()
+                .select(ddt.DataType,
+                        DSL.avg(DSL.cast(ddt.Data, BigDecimal.class)).as("data"))
+                .from(ddt)
+                .where(ddt.DeviceId.eq(deviceId))
+                .and(ddt.IsError.eq(false))
+                .and(ddt.DataType.in(SensorDataType.PH.getCode(), SensorDataType.P.getCode(), SensorDataType.N.getCode(), SensorDataType.K.getCode()))
+                .groupBy(ddt.DataType)
+                .fetchInto(AverageDataSQL.class);
 
-        return null;
+        AverageDataInfo averageDataInfo = new AverageDataInfo();
+        averageDataInfo.setPh(BigDecimal.ZERO);
+        averageDataInfo.setP(BigDecimal.ZERO);
+        averageDataInfo.setN(BigDecimal.ZERO);
+        averageDataInfo.setK(BigDecimal.ZERO);
+
+        for (AverageDataSQL info:list){
+            switch (info.getDataType()){
+                case "ph":averageDataInfo.setPh(info.getData());break;
+                case "p":averageDataInfo.setP(info.getData());break;
+                case "n":averageDataInfo.setN(info.getData());break;
+                case "k":averageDataInfo.setK(info.getData());break;
+            }
+        }
+        return averageDataInfo;
     }
 }
