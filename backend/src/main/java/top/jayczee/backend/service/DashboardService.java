@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface DashboardService {
     @Data
@@ -75,5 +76,13 @@ public interface DashboardService {
     }
 
     AverageDataInfo averageData(Long deviceId);
+    @Getter
+    @Setter
+    class DeviceConditionData{
+        private String deviceName;
+        private Integer sensorCountUsing;
+        private Integer sensorCountTotal;
+    }
 
+    List<DeviceConditionData> deviceCondList();
 }

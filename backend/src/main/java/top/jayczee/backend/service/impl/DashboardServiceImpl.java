@@ -8,13 +8,17 @@ import top.jayczee.backend.enums.SensorDataType;
 import top.jayczee.backend.service.DashboardService;
 import top.jayczee.codegen.Tables;
 import top.jayczee.codegen.tables.DeviceDataTable;
+import top.jayczee.codegen.tables.DeviceInfoTable;
 import top.jayczee.codegen.tables.SensorInfoTable;
 import top.jayczee.codegen.tables.daos.DeviceDataDao;
 import top.jayczee.codegen.tables.daos.SensorInfoDao;
+import top.jayczee.codegen.tables.pojos.DeviceInfo;
+import top.jayczee.codegen.tables.pojos.SensorInfo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -170,5 +174,39 @@ public class DashboardServiceImpl implements DashboardService {
             }
         }
         return averageDataInfo;
+    }
+
+    @Override
+    public List<DeviceConditionData> deviceCondList() {
+        List<DeviceConditionData> list = new ArrayList<>();
+        SensorInfoTable sit = Tables.SENSOR_INFO;
+        DeviceInfoTable dit= Tables.DEVICE_INFO;
+        List<DeviceInfo> deviceList = deviceDataDao
+                .ctx()
+                .select(dit.Id,
+                        dit.DeviceName)
+                .from(dit)
+                .fetchInto(DeviceInfo.class);
+        for (DeviceInfo device:deviceList){
+            DeviceConditionData data = new DeviceConditionData();
+            data.setDeviceName(device.getDeviceName());
+            List<SensorInfo> sensorInfoList = sensorInfoDao
+                    .ctx()
+                    .select(sit.Id,
+                            sit.IsRunning)
+                    .from(sit)
+                    .where(sit.DeviceId.eq(device.getId()))
+                    .fetchInto(SensorInfo.class);
+            data.setSensorCountUsing(0);
+            data.setSensorCountTotal(0);
+            for (SensorInfo info:sensorInfoList){
+                if (info.getIsRunning()){
+                    data.setSensorCountUsing(data.getSensorCountUsing() + 1);
+                }
+                data.setSensorCountTotal(data.getSensorCountTotal() + 1);
+            }
+            list.add(data);
+        }
+        return list;
     }
 }

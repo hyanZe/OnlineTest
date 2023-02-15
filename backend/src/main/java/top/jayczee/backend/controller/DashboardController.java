@@ -31,4 +31,10 @@ public class DashboardController {
     public R<Object> averageData(@RequestParam Long deviceId){
         return R.okData(dashboardService.averageData(deviceId));
     }
+
+    @ApiOperation("设备运行状态")
+    @PostMapping("/auth/dashboard/device-condition.json")
+    public R<Object> averageData(){
+        return R.okData(dashboardService.deviceCondList());
+    }
 }
