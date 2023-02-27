@@ -92,4 +92,26 @@ public class DeviceServiceImpl implements DeviceService {
         data.setData(deviceDataList.stream().map(DeviceData::getData).map(BigDecimal::new).collect(Collectors.toList()));
         return data;
     }
+
+    @Override
+    public List<DataLogItem> deviceDataLogs(Long deviceId) {
+        DeviceDataTable ddt = Tables.DEVICE_DATA;
+        return deviceDataDao
+                .ctx()
+                .selectFrom(ddt)
+                .where(ddt.DeviceId.eq(deviceId))
+                .orderBy(ddt.Id.desc())
+                .fetchInto(DataLogItem.class);
+    }
+
+    @Override
+    public void updateErrorState(Long dataId, Boolean state) {
+        DeviceDataTable ddt = Tables.DEVICE_DATA;
+        deviceDataDao
+                .ctx()
+                .update(ddt)
+                .set(ddt.IsError,state)
+                .where(ddt.Id.eq(dataId))
+                .execute();
+    }
 }

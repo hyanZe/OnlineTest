@@ -17,10 +17,10 @@ public interface DeviceService {
      */
     @Setter
     @Getter
-    class DeviceInfo{
-            private Long id;
-            private String ip;
-            private String deviceName;
+    class DeviceInfo {
+        private Long id;
+        private String ip;
+        private String deviceName;
     }
 
     /**
@@ -35,13 +35,26 @@ public interface DeviceService {
 
 
     List<SensorInfo> deviceSensorInfoList(Long deviceId, String dataType);
+
     @Data
-    class SensorChartData{
+    class SensorChartData {
         List<String> createDt;
         List<BigDecimal> data;
     }
 
     SensorChartData sensorDataList(Long deviceId, Long sensorId);
+    @Data
+    class DataLogItem{
+        private Long id;
+        private LocalDateTime createDt;
+        private String dataType;
+        private String data;
+        private Boolean isError;
+    }
+
+    List<DataLogItem> deviceDataLogs(Long deviceId);
+
+    void updateErrorState(Long dataId, Boolean state);
 }
 
 //写controller  作用：给前端调用
