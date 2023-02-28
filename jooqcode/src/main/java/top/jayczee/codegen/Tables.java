@@ -4,6 +4,7 @@
 package top.jayczee.codegen;
 
 
+import top.jayczee.codegen.tables.DeviceConfigTable;
 import top.jayczee.codegen.tables.DeviceDataTable;
 import top.jayczee.codegen.tables.DeviceInfoTable;
 import top.jayczee.codegen.tables.SensorInfoTable;
@@ -15,6 +16,11 @@ import top.jayczee.codegen.tables.UserInfoTable;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * 设备配置表
+     */
+    public static final DeviceConfigTable DEVICE_CONFIG = DeviceConfigTable.DEVICE_CONFIG;
 
     /**
      * 数据记录

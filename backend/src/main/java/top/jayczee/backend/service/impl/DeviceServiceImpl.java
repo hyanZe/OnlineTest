@@ -1,35 +1,39 @@
 package top.jayczee.backend.service.impl;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jayczee.backend.service.DeviceService;
+import top.jayczee.backend.util.SnowFlaskIdUtil;
 import top.jayczee.codegen.Tables;
+import top.jayczee.codegen.tables.DeviceConfigTable;
 import top.jayczee.codegen.tables.DeviceDataTable;
 import top.jayczee.codegen.tables.DeviceInfoTable;
 import top.jayczee.codegen.tables.SensorInfoTable;
+import top.jayczee.codegen.tables.daos.DeviceConfigDao;
 import top.jayczee.codegen.tables.daos.DeviceDataDao;
 import top.jayczee.codegen.tables.daos.DeviceInfoDao;
 import top.jayczee.codegen.tables.daos.SensorInfoDao;
+import top.jayczee.codegen.tables.pojos.DeviceConfig;
 import top.jayczee.codegen.tables.pojos.DeviceData;
 import top.jayczee.codegen.tables.pojos.SensorInfo;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * <p>TODO</p>
  *
  * @author Jayczee
  * @since 2023/2/6
  */
 
 @Service
+@Slf4j
 public class DeviceServiceImpl implements DeviceService {
     @Setter(onMethod_ = {@Autowired})
     private DeviceInfoDao deviceInfoDao;
@@ -37,9 +41,12 @@ public class DeviceServiceImpl implements DeviceService {
     private SensorInfoDao sensorInfoDao;
     @Setter(onMethod_ = {@Autowired})
     private DeviceDataDao deviceDataDao;
+    @Setter(onMethod_ = {@Autowired})
+    private DeviceConfigDao deviceConfigDao;
+
     @Override
     public List<DeviceInfo> deviceList() {
-        DeviceInfoTable dit= Tables.DEVICE_INFO;
+        DeviceInfoTable dit = Tables.DEVICE_INFO;
         List<DeviceInfo> deviceInfos = deviceInfoDao
                 .ctx()
                 .select(dit.Id,
@@ -52,7 +59,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<String> deviceDataTypeList(Long deviceId) {
-        SensorInfoTable sit=Tables.SENSOR_INFO;
+        SensorInfoTable sit = Tables.SENSOR_INFO;
         return sensorInfoDao
                 .ctx()
                 .selectDistinct(sit.DataType)
@@ -64,7 +71,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<SensorInfo> deviceSensorInfoList(Long deviceId, String dataType) {
-        SensorInfoTable sit=Tables.SENSOR_INFO;
+        SensorInfoTable sit = Tables.SENSOR_INFO;
         return sensorInfoDao
                 .ctx()
                 .selectFrom(sit)
@@ -110,8 +117,78 @@ public class DeviceServiceImpl implements DeviceService {
         deviceDataDao
                 .ctx()
                 .update(ddt)
-                .set(ddt.IsError,state)
+                .set(ddt.IsError, state)
                 .where(ddt.Id.eq(dataId))
                 .execute();
+    }
+
+    @Override
+    public void initDeviceConfig(Long deviceId) {
+        Map<String, String> thresholdMap = DeviceThresholdConfigMap();
+        List<DeviceConfig> confList = new ArrayList<>();
+        DeviceConfigTable dct = Tables.DEVICE_CONFIG;
+        List<DeviceConfig> deviceConfigs = deviceConfigDao
+                .ctx()
+                .select(dct.Id)
+                .from(dct)
+                .where(dct.IsDelete.eq(false))
+                .and(dct.DeviceId.eq(deviceId))
+                .fetchInto(DeviceConfig.class);
+        if (deviceConfigs.size() > 0) throw new IllegalStateException("该设备数据已初始化");
+        for (Map.Entry<String, String> entry : thresholdMap.entrySet()) {
+            DeviceConfig config = new DeviceConfig();
+            config.setId(SnowFlaskIdUtil.getId());
+            config.setConfigKey(entry.getKey());
+            config.setConfigVal(entry.getValue());
+            config.setDeviceId(deviceId);
+            config.setIsDelete(false);
+            config.setCreateDt(LocalDateTime.now());
+            confList.add(config);
+        }
+        deviceConfigDao.insert(confList);
+    }
+
+    @Override
+    public void updateConfig(Long deviceId, String key, String val) {
+        DeviceConfigTable dct = Tables.DEVICE_CONFIG;
+        deviceConfigDao
+                .ctx()
+                .update(dct)
+                .set(dct.ConfigVal, val)
+                .where(dct.DeviceId.eq(deviceId))
+                .and(dct.ConfigKey.eq(key))
+                .and(dct.IsDelete.eq(false))
+                .execute();
+    }
+
+    @Override
+    public ThresholdData deviceThreshold(Long deviceId){
+        DeviceConfigTable dct = Tables.DEVICE_CONFIG;
+        List<DeviceConfig> deviceConfigs = deviceConfigDao
+                .ctx()
+                .selectFrom(dct)
+                .where(dct.DeviceId.eq(deviceId))
+                .and(dct.IsDelete.eq(false))
+                .fetchInto(DeviceConfig.class);
+        ThresholdData data = new ThresholdData();
+        data.setAllEmpty();
+        Set<String> keySet = DeviceThresholdConfigMap().keySet();
+        for (DeviceConfig config : deviceConfigs) {
+            if (keySet.contains(config.getConfigKey())){
+                try {
+                    log.info(data.toString());
+                    String key = config.getConfigKey();
+                    log.info("获取对象字段:"+key);
+                    Field field = data.getClass().getDeclaredField(key);
+                    field.setAccessible(true);
+                    field.set(data,new BigDecimal(config.getConfigVal()));
+                }catch (NoSuchFieldException e){
+                    log.error("反射获取字段失败");
+                }catch (IllegalAccessException ex){
+                    log.error("无字段访问权限");
+                }
+            }
+        }
+        return data;
     }
 }

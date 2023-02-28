@@ -60,4 +60,23 @@ public class DeviceController {
         deviceService.updateErrorState(dataId, state);
         return R.ok();
     }
+    @ApiOperation("初始化设备配置数据")
+    @PostMapping("/auth/device/init-config.json")
+    public R<Object> initDeviceConfig(@RequestParam Long deviceId){
+        deviceService.initDeviceConfig(deviceId);
+        return R.ok();
+    }
+    @ApiOperation("更新设备指定配置数据")
+    @PostMapping("/auth/device/update-config.json")
+    public R<Object> updateConfig(@RequestParam Long deviceId,
+                                  @RequestParam String key,
+                                  @RequestParam String val){
+        deviceService.updateConfig(deviceId,key,val);
+        return R.ok();
+    }
+    @ApiOperation("加载设备阈值数据")
+    @PostMapping("/auth/device/threshold.json")
+    public R<Object> deviceThreshold(@RequestParam Long deviceId){
+        return R.okData(deviceService.deviceThreshold(deviceId));
+    }
 }

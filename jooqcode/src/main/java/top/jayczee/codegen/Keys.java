@@ -9,10 +9,12 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
+import top.jayczee.codegen.tables.DeviceConfigTable;
 import top.jayczee.codegen.tables.DeviceDataTable;
 import top.jayczee.codegen.tables.DeviceInfoTable;
 import top.jayczee.codegen.tables.SensorInfoTable;
 import top.jayczee.codegen.tables.UserInfoTable;
+import top.jayczee.codegen.tables.records.DeviceConfigRecord;
 import top.jayczee.codegen.tables.records.DeviceDataRecord;
 import top.jayczee.codegen.tables.records.DeviceInfoRecord;
 import top.jayczee.codegen.tables.records.SensorInfoRecord;
@@ -30,6 +32,7 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<DeviceConfigRecord> KEY_DEVICE_CONFIG_PRIMARY = Internal.createUniqueKey(DeviceConfigTable.DEVICE_CONFIG, DSL.name("KEY_device_config_PRIMARY"), new TableField[] { DeviceConfigTable.DEVICE_CONFIG.Id }, true);
     public static final UniqueKey<DeviceDataRecord> KEY_DEVICE_DATA_PRIMARY = Internal.createUniqueKey(DeviceDataTable.DEVICE_DATA, DSL.name("KEY_device_data_PRIMARY"), new TableField[] { DeviceDataTable.DEVICE_DATA.Id }, true);
     public static final UniqueKey<DeviceInfoRecord> KEY_DEVICE_INFO_PRIMARY = Internal.createUniqueKey(DeviceInfoTable.DEVICE_INFO, DSL.name("KEY_device_info_PRIMARY"), new TableField[] { DeviceInfoTable.DEVICE_INFO.Id }, true);
     public static final UniqueKey<SensorInfoRecord> KEY_SENSOR_INFO_PRIMARY = Internal.createUniqueKey(SensorInfoTable.SENSOR_INFO, DSL.name("KEY_sensor_info_PRIMARY"), new TableField[] { SensorInfoTable.SENSOR_INFO.Id }, true);

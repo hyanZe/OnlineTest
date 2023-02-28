@@ -11,6 +11,7 @@ import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
+import top.jayczee.codegen.tables.DeviceConfigTable;
 import top.jayczee.codegen.tables.DeviceDataTable;
 import top.jayczee.codegen.tables.DeviceInfoTable;
 import top.jayczee.codegen.tables.SensorInfoTable;
@@ -29,6 +30,11 @@ public class Graduation extends SchemaImpl {
      * The reference instance of <code>graduation</code>
      */
     public static final Graduation GRADUATION = new Graduation();
+
+    /**
+     * 设备配置表
+     */
+    public final DeviceConfigTable DEVICE_CONFIG = DeviceConfigTable.DEVICE_CONFIG;
 
     /**
      * 数据记录
@@ -66,6 +72,7 @@ public class Graduation extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.<Table<?>>asList(
+            DeviceConfigTable.DEVICE_CONFIG,
             DeviceDataTable.DEVICE_DATA,
             DeviceInfoTable.DEVICE_INFO,
             SensorInfoTable.SENSOR_INFO,

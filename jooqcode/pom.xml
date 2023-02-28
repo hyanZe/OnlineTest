@@ -48,9 +48,9 @@
                     <jdbc>
                         <!-- 数据库相关配置 -->
                         <driver>com.mysql.cj.jdbc.Driver</driver>
-                        <url>jdbc:mysql://45.144.137.181:3308/graduation</url>
-                        <user>wzh</user>
-                        <password>jhkd5960795</password>
+                        <url>jdbc:mysql://124.223.38.50:3306/graduation</url>
+                        <user>root</user>
+                        <password>root123456.</password>
                     </jdbc>
 
                     <generator>
