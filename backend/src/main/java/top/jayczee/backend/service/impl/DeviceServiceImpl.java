@@ -1,7 +1,11 @@
 package top.jayczee.backend.service.impl;
 
+import io.swagger.models.auth.In;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.jooq.Record2;
+import org.jooq.Result;
+import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jayczee.backend.service.DeviceService;
@@ -17,6 +21,7 @@ import top.jayczee.codegen.tables.daos.DeviceInfoDao;
 import top.jayczee.codegen.tables.daos.SensorInfoDao;
 import top.jayczee.codegen.tables.pojos.DeviceConfig;
 import top.jayczee.codegen.tables.pojos.DeviceData;
+import top.jayczee.codegen.tables.pojos.DeviceInfo;
 import top.jayczee.codegen.tables.pojos.SensorInfo;
 
 import java.lang.reflect.Field;
@@ -190,5 +195,36 @@ public class DeviceServiceImpl implements DeviceService {
             }
         }
         return data;
+    }
+
+    @Override
+    public DeviceDetailInfo deviceDetail(Long deviceId) {
+        SensorInfoTable sit = Tables.SENSOR_INFO;
+        Result<Record2<Integer, String>> fetch = sensorInfoDao
+                .ctx()
+                .select(DSL.count(sit.Id),
+                        sit.DataType)
+                .where(sit.DeviceId.eq(deviceId))
+                .and(sit.IsDelete.eq(false))
+                .groupBy(sit.DataType)
+                .fetch();
+        DeviceDetailInfo info = new DeviceDetailInfo();
+        for(Record2<Integer,String> record:fetch){
+            switch (record.value2()){
+                case "ph":info.setPhSensorCount(record.value1());info.setTotalSensorCount(info.getTotalSensorCount() + record.value1());break;
+                case "p":info.setPSensorCount(record.value1());info.setTotalSensorCount(info.getTotalSensorCount() + record.value1());break;
+                case "airTemp":info.setAirTempSensorCount(record.value1());info.setTotalSensorCount(info.getTotalSensorCount() + record.value1());break;
+                case "base":info.setBaseSensorCount(record.value1());info.setTotalSensorCount(info.getTotalSensorCount() + record.value1());break;
+                case "n":info.setNSensorCount(record.value1());info.setTotalSensorCount(info.getTotalSensorCount() + record.value1());break;
+                case "k":info.setKSensorCount(record.value1());info.setTotalSensorCount(info.getTotalSensorCount() + record.value1());break;
+                case "airWet":info.setAirWetSensorCount(record.value1());info.setTotalSensorCount(info.getTotalSensorCount() + record.value1());break;
+                case "baseTemp":info.setBaseTempSensorCount(record.value1());info.setTotalSensorCount(info.getTotalSensorCount() + record.value1());break;
+            }
+        }
+        top.jayczee.codegen.tables.pojos.DeviceInfo deviceInfo = deviceInfoDao.fetchOneById(deviceId);
+        info.setDeviceName(deviceInfo.getDeviceName());
+        info.setIp(deviceInfo.getIp());
+        info.setCreateDt(deviceInfo.getCreateDt());
+        return info;
     }
 }

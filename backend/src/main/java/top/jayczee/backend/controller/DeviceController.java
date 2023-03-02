@@ -79,4 +79,9 @@ public class DeviceController {
     public R<Object> deviceThreshold(@RequestParam Long deviceId){
         return R.okData(deviceService.deviceThreshold(deviceId));
     }
+    @ApiOperation("设备详情")
+    @PostMapping("/auth/device/detail-info.json")
+    public R<Object> deviceDetailInfo(@RequestParam Long deviceId){
+        return R.okData(deviceService.deviceDetail(deviceId));
+    }
 }

@@ -29,6 +29,8 @@ public interface DeviceService {
         }};
     }
 
+
+
     /**
      * 设备信息
      */
@@ -107,6 +109,23 @@ public interface DeviceService {
     }
 
     ThresholdData deviceThreshold(Long deviceId);
+    @Data
+    class DeviceDetailInfo{
+        private String deviceName;
+        private String ip;
+        private LocalDateTime createDt;
+        private int totalSensorCount;
+        private int pSensorCount;
+        private int phSensorCount;
+        private int airTempSensorCount;
+        private int baseSensorCount;
+        private int nSensorCount;
+        private int kSensorCount;
+        private int airWetSensorCount;
+        private int baseTempSensorCount;
+    }
+
+    DeviceDetailInfo deviceDetail(Long deviceId);
 }
 
 //写controller  作用：给前端调用
