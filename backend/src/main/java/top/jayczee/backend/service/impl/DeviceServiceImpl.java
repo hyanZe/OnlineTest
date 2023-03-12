@@ -204,6 +204,7 @@ public class DeviceServiceImpl implements DeviceService {
                 .ctx()
                 .select(DSL.count(sit.Id),
                         sit.DataType)
+                .from(sit)
                 .where(sit.DeviceId.eq(deviceId))
                 .and(sit.IsDelete.eq(false))
                 .groupBy(sit.DataType)
